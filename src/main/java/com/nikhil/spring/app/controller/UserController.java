@@ -3,9 +3,7 @@ package com.nikhil.spring.app.controller;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,7 +16,6 @@ import com.nikhil.spring.app.session.SessionContext;
 
 @Controller
 @RequestMapping("/user")
-@CrossOrigin(origins="*")
 public class UserController {
 
 	@Autowired
