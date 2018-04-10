@@ -23,6 +23,28 @@ public class User {
 
 	@Column(name = "password", nullable = false)
 	private String password;
+	
+	@Column(name = "employer", nullable = true)
+	private String employer;
+	
+	@Column(name = "project", nullable = true)
+	private String project;
+	
+	public String getEmployer() {
+		return employer;
+	}
+
+	public void setEmployer(String employer) {
+		this.employer = employer;
+	}
+
+	public String getProject() {
+		return project;
+	}
+
+	public void setProject(String project) {
+		this.project = project;
+	}
 
 	public int getId() {
 		return id;

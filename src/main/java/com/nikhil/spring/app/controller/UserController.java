@@ -24,14 +24,15 @@ public class UserController {
 	@Autowired
 	ObjectFactory<SessionContext> sessionContextFactory;
 	
-	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	@RequestMapping(value = "", method = RequestMethod.PUT)
 	@ResponseBody
 	public Response update(@RequestBody User user) {
 
-		User usr = userService.getUser(user.getId());
+		SessionContext sessionContext = sessionContextFactory.getObject();
+		User usr = sessionContext.getUser();
 		
 		if(usr==null)
-			return new Response("ERROR", "User not found", null);
+			return new Response(Response.ERROR, "Not Logged In", null);
 		if(user.getEmail()!=null && user.getEmail()!="")
 			usr.setEmail(user.getEmail());
 		if(user.getName()!=null && user.getName()!="")
@@ -40,15 +41,14 @@ public class UserController {
 			usr.setPassword(DigestUtils.md5Hex(user.getPassword()));
 		
 		userService.updateUser(usr);
-		return new Response("OK", "", usr);
+		return new Response(Response.SUCCESS, "", usr);
 	}
 	
-	@RequestMapping(value = "/get", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	@ResponseBody
 	public Response get() {
 		SessionContext sessionContext = sessionContextFactory.getObject();
 		User user = sessionContext.getUser();
-		
-		return new Response("OK", "", user);
+		return new Response(Response.SUCCESS, "", user);
 	}
 }

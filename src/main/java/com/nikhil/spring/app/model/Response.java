@@ -2,6 +2,8 @@ package com.nikhil.spring.app.model;
 
 public class Response {
 
+	public static final String SUCCESS = "OK";
+	public static final String ERROR = "Error";
 	private String status;
 	private String message;
 	private Object data;

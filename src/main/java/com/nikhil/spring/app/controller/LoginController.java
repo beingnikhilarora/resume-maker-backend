@@ -52,12 +52,12 @@ public class LoginController {
 			// res.setStatus(res.SC_NOT_FOUND);
 			LOGGER.error("User Not Found. Sending Error Response");
 			res.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
-			return new Response("Error", "Check email or password.", null);
+			return new Response(Response.ERROR, "Check email or password.", null);
 		}
 		SessionContext sessionContext = sessionContextFactory.getObject();
 		sessionContext.isAuthenticated = true;
 		sessionContext.setUser(user);
 
-		return new Response("OK", "", user);
+		return new Response(Response.SUCCESS, "", user);
 	}
 }
