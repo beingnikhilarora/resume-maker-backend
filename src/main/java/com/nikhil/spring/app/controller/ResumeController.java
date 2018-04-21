@@ -1,24 +1,24 @@
 package com.nikhil.spring.app.controller;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.nikhil.spring.app.utils.TemplateGeneratorUtil;
+import com.nikhil.spring.app.service.ResumeService;
 
 @Controller
 public class ResumeController {
 
+	@Autowired
+	private ResumeService resumeService;
+	
 	@RequestMapping(value="/generate",method=RequestMethod.GET)
 	@ResponseBody
 	public void generateTemplate() throws IOException {
-		Map<String, String> map = new HashMap<String, String>();
-		map.put("name", "nikhil arora");
-		TemplateGeneratorUtil.generate("/Users/nikhilarora/Documents/shared/hello.html", "templates/template1/index.vm", map);
+		resumeService.generateTemplate();
 	}
 }
