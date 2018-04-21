@@ -24,6 +24,7 @@ public class UserServiceImpl implements UserService{
 
 	public void updateUser(User user) {
 		// TODO Auto-generated method stub
+		UserUtil.encryptPassword(user);
 		dao.updateUser(user);
 	}
 

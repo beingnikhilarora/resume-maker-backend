@@ -1,6 +1,5 @@
 package com.nikhil.spring.app.controller;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,21 +26,8 @@ public class UserController {
 	@RequestMapping(value = "", method = RequestMethod.PUT)
 	@ResponseBody
 	public Response update(@RequestBody User user) {
-
-		SessionContext sessionContext = sessionContextFactory.getObject();
-		User usr = sessionContext.getUser();
-		
-		if(usr==null)
-			return new Response(Response.ERROR, "Not Logged In", null);
-		if(user.getEmail()!=null && user.getEmail()!="")
-			usr.setEmail(user.getEmail());
-		if(user.getName()!=null && user.getName()!="")
-			usr.setName(user.getName());
-		if (user.getPassword() != null && user.getPassword() != "")
-			usr.setPassword(DigestUtils.md5Hex(user.getPassword()));
-		
-		userService.updateUser(usr);
-		return new Response(Response.SUCCESS, "", usr);
+		userService.updateUser(user);
+		return new Response(Response.SUCCESS, "", user);
 	}
 	
 	@RequestMapping(value = "", method = RequestMethod.GET)

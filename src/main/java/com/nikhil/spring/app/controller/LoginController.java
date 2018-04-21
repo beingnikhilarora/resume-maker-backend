@@ -47,17 +47,41 @@ public class LoginController {
 		LOGGER.info("Inside Login");
 		LOGGER.info("URL : " + req.getRequestURI());
 
+		SessionContext sessionContext = sessionContextFactory.getObject();
+		
+		if(sessionContext.isAuthenticated == true) {
+			return new Response(Response.ERROR, "Already Logged In", null);
+		}
+		
 		User user = userService.authenticate(param);
 		if (user == null) {
 			// res.setStatus(res.SC_NOT_FOUND);
 			LOGGER.error("User Not Found. Sending Error Response");
-			res.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
+			//res.sendError(HttpServletResponse.SC_NOT_FOUND, "Not found");
 			return new Response(Response.ERROR, "Check email or password.", null);
 		}
-		SessionContext sessionContext = sessionContextFactory.getObject();
+		
 		sessionContext.isAuthenticated = true;
 		sessionContext.setUser(user);
 
 		return new Response(Response.SUCCESS, "", user);
+	}
+	
+	@RequestMapping(value = "/logout",method = RequestMethod.GET)
+	@ResponseBody
+	public Response Logout(HttpServletRequest req) {
+		LOGGER.debug("Inside Logout");
+		LOGGER.info("URL : " + req.getRequestURI());
+		
+		SessionContext sessionContext = sessionContextFactory.getObject();
+		if(sessionContext.isAuthenticated == false) {
+			return new Response(Response.ERROR,"Not Logged In",null);
+		}
+		else {
+			sessionContext.isAuthenticated = false;
+			sessionContext.setUser(null);
+		}
+		
+		return new Response(Response.SUCCESS,"Logged Out Successfully",null);
 	}
 }
